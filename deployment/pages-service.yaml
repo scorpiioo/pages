@@ -5,13 +5,13 @@ metadata:
     app: pages
     tier: service
   name: pages
-  namespace: [student-name]
+  namespace: digma-6
 spec:
   ports:
-    - name: pages-service-port
-      port: 8080
-      protocol: TCP
-      targetPort: 8080
+  - name: pages-service-port
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
   selector:
     app: pages
     tier: service

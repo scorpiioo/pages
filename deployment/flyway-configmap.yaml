@@ -1,12 +1,7 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: flyway-configmap
-  namespace: [student-name]
 data:
   spring.datasource.username: root
-
-  V1__inital_schema.sql: |
+  V1__initial_schema.sql: |
     USE pages;
     create table pages(
     id bigint(20) not null auto_increment,
@@ -18,3 +13,8 @@ data:
     )
     engine = innodb
     default charset = utf8;
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: flyway-configmap
+  namespace: digma-6
