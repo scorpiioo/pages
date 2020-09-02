@@ -19,12 +19,40 @@ spec:
         app: pages
         tier: service
     spec:
+      volumes:
+        - name: node-dir
+          hostPath:
+            path: /digma-6
       containers:
         - image: kuberlab2020/pages:service
           name: pages
+          volumeMounts:
+            - name: node-dir
+              mountPath: /digma-6
           ports:
             - containerPort: 8080
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 30
           env:
+            - name: DEBUG
+              value: "true"
+            - name: LOGGING_FILE_NAME
+              value: "digma-6/logs/app.log"
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
+              value: debug
+            - name: LOGGING_LEVEL_ROOT
+              value: debug
+            - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+              value: "*"
             - name: PAGE_CONTENT
               valueFrom:
                 configMapKeyRef:
